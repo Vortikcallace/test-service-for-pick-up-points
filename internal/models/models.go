@@ -39,3 +39,20 @@ type Product struct {
 	UpdatedAt        time.Time      `json:"updated_at"`
 	DeletedAt        gorm.DeletedAt `gorm:"index" json:"-"`
 }
+
+type UserResponse struct {
+	ID         uint      `json:"id"`
+	Name       string    `json:"name"`
+	Email      string    `json:"email"`
+	Age        int       `json:"age"`
+	UniqueCode uint      `json:"ucode"`
+	Orders     []Order   `json:"orders"`
+	CreatedAt  time.Time `json:"created_at"`
+}
+
+type CreateUserRequest struct {
+	Name     string `json:"name" binding:"required,min=2,max=20"`
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required,min=6"`
+	Age      int    `json:"age" binding:"min=0,max=120"`
+}
