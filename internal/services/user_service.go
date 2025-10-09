@@ -5,6 +5,8 @@ import (
 	"test-service-for-pick-up-points/internal/database"
 	"test-service-for-pick-up-points/internal/models"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserService struct {
@@ -59,7 +61,7 @@ func (s *UserService) Authenticate(email, password string) (*models.User, error)
 		return nil, errors.New("invalid password")
 	}
 
-	if user.Password != password {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return nil, errors.New("invalid password")
 	}
 
