@@ -8,7 +8,8 @@ import (
 
 type Point struct {
 	ID            uint           `gorm:"primaryKey" json:"id"`
-	Open_or_Close bool           `gorm:"default:false" json:"readiness"`
+	Open_or_Close bool           `gorm:"default:false" json:"op_or_cl"`
+	Changed       bool           `gorm:"default:false" json:"changed"`
 	Address       string         `gorm:"type:varchar(255);not null" json:"address"`
 	CreatedAt     time.Time      `json:"created_at"`
 	UpdatedAt     time.Time      `json:"updated_at"`
