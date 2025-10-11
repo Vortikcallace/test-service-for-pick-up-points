@@ -16,3 +16,8 @@ type Order struct {
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
+
+type CreateOrderRequest struct {
+	UserID    uint `json:"user_id" binding:"required"`
+	ProductID uint `json:"product_id" binding:"required"`
+}

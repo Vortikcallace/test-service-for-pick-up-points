@@ -15,3 +15,9 @@ type Product struct {
 	UpdatedAt        time.Time      `json:"updated_at"`
 	DeletedAt        gorm.DeletedAt `gorm:"index" json:"-"`
 }
+
+type CreateProductRequest struct {
+	Author           string `json:"author" binding:"required,max=255"`
+	Name             string `json:"name" binding:"required,max=20"`
+	ShortDescription string `json:"shortdescr" binding:"required,max=20"`
+}

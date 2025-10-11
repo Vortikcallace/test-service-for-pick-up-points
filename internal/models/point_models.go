@@ -14,3 +14,8 @@ type Point struct {
 	UpdatedAt     time.Time      `json:"updated_at"`
 	DeletedAt     gorm.DeletedAt `gorm:"index" json:"-"`
 }
+
+type CreatePointRequest struct {
+	Address       string `json:"address" binding:"required"`
+	Open_or_Close bool   `json:"open_or_close" binding:"required"`
+}
