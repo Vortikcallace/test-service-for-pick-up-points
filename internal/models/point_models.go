@@ -18,5 +18,6 @@ type Point struct {
 
 type CreatePointRequest struct {
 	Address       string `json:"address" binding:"required"`
+	Changed       bool   `json:"changed" binding:"required"`
 	Open_or_Close bool   `json:"open_or_close" binding:"required"`
 }
