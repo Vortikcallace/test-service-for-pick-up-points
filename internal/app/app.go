@@ -4,11 +4,9 @@ import (
 	"log"
 	"test-service-for-pick-up-points/internal/config"
 	"test-service-for-pick-up-points/internal/database"
-	"test-service-for-pick-up-points/internal/redis"
 	"test-service-for-pick-up-points/internal/transport/routes"
 
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 )
 
 type App struct {
@@ -23,9 +21,11 @@ func NewApp() *App {
 		log.Fatal("Cannot load config:", err)
 	}
 
-	redisConfig := redis.NewConfig(viper.GetViper())
-	redis.InitRedisConfig(redisConfig)
-	defer redis.Close()
+	/*
+		redisConfig := redis.NewConfig(viper.GetViper())
+		redis.InitRedisConfig(redisConfig)
+		defer redis.Close()
+	*/
 
 	db, err := database.NewDatabase(cfg)
 	if err != nil {

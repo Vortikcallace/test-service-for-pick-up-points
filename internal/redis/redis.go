@@ -2,50 +2,20 @@ package redis
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 	"time"
 
+	"test-service-for-pick-up-points/internal/config"
+
 	"github.com/redis/go-redis/v9"
-	"github.com/spf13/viper"
 )
 
 var Ctx = context.Background()
 var Rdb *redis.Client
 
-type Config struct {
-	Host     string
-	Port     int
-	Password string
-	DB       int
-}
-
-func NewConfig(v *viper.Viper) *Config {
-	return &Config{
-		Host:     v.GetString("redis.host"),
-		Port:     v.GetInt("redis.port"),
-		Password: v.GetString("redis.password"),
-		DB:       v.GetInt("redis.db"),
-	}
-}
-
-func InitRedisConfig(cfg *Config) {
-	addr := fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
-
-	Rdb = redis.NewClient(&redis.Options{
-		Addr:     addr,
-		Password: cfg.Password,
-		DB:       cfg.DB,
-		PoolSize: 10,
-	})
-
-	_, err := Rdb.Ping(Ctx).Result()
-	if err != nil {
-		log.Fatalf("Error connecting to Redis: %v", err)
-	}
-
-	log.Println("Successfully connected to Redis")
+func InitRedisConfig(cfg *config.RedisConfig) {
+	Rdb = config.InitRedisClient(cfg)
 }
 
 func InitRedis() {
