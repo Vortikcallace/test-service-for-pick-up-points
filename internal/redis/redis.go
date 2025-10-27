@@ -2,6 +2,7 @@ package redis
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -19,10 +20,17 @@ func InitRedisConfig(cfg *config.RedisConfig) {
 }
 
 func InitRedis() {
-	redisAddr := os.Getenv("REDIS_ADDR")
-	if redisAddr == "" {
-		redisAddr = "localhost:6379"
+	redisPort := os.Getenv("REDIS_PORT")
+	if redisPort == "" {
+		redisPort = "6379"
 	}
+
+	redisHost := os.Getenv("REDIS_HOST")
+	if redisHost == "" {
+		redisHost = "localhost"
+	}
+
+	redisAddr := fmt.Sprintf("%s:%s", redisHost, redisPort)
 
 	redisPassword := os.Getenv("REDIS_PASSWORD")
 

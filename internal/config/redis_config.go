@@ -16,12 +16,24 @@ type RedisConfig struct {
 	DB       int
 }
 
+func SetUpViper() *viper.Viper {
+	v := viper.New()
+	v.SetConfigFile(".env")
+	v.AutomaticEnv()
+
+	if err := v.ReadInConfig(); err != nil {
+		log.Fatalf("Error reading config file: %v", err)
+	}
+
+	return v
+}
+
 func NewConfig(v *viper.Viper) *RedisConfig {
 	return &RedisConfig{
-		Host:     v.GetString("redis.host"),
-		Port:     v.GetInt("redis.port"),
-		Password: v.GetString("redis.password"),
-		DB:       v.GetInt("redis.db"),
+		Host:     v.GetString("REDIS_HOST"),
+		Port:     v.GetInt("REDIS_PORT"),
+		Password: v.GetString("REDIS_PASSWORD"),
+		DB:       v.GetInt("REDIS_DB"),
 	}
 }
 
