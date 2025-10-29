@@ -17,7 +17,7 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 	pointRepo := database.NewPointRepository(db.DB)
 
 	userService := services.NewUserService(userRepo)
-	orderService := services.NewOrderService(orderRepo, userRepo, productRepo)
+	orderService := services.NewOrderService(orderRepo, userRepo, productRepo, pointRepo)
 	productService := services.NewProductService(productRepo)
 	pointService := services.NewPointService(pointRepo)
 

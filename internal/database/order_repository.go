@@ -20,16 +20,20 @@ func (r *OrderRepository) Create(order *models.Order) error {
 
 func (r *OrderRepository) GetByID(id uint) (*models.Order, error) {
 	var order models.Order
-	err := r.db.Preload("Product").First(&order, id).Error
+	err := r.db.Preload("Product").Preload("Point").First(&order, id).Error
 	return &order, err
 }
 
 func (r *OrderRepository) GetByUserID(userID uint) ([]models.Order, error) {
 	var orders []models.Order
-	err := r.db.Preload("Product").Where("user_id = ?", userID).Find(&orders).Error
+	err := r.db.Preload("Product").Preload("Point").Where("user_id = ?", userID).Find(&orders).Error
 	return orders, err
 }
 
 func (r *OrderRepository) UpdateReadiness(id uint, readiness bool) error {
 	return r.db.Model(&models.Order{}).Where("id = ?", id).Update("readiness", readiness).Error
+}
+
+func (r *OrderRepository) UpdateAccess(id uint, access bool) error {
+	return r.db.Model(&models.Order{}).Where("id = ?", id).Update("access", access).Error
 }
