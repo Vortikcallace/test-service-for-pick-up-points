@@ -7,11 +7,13 @@ import (
 	"test-service-for-pick-up-points/internal/transport/routes"
 
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 )
 
 type App struct {
 	config *config.Config
 	db     *database.Database
+	redis  *redis.Client
 	router *gin.Engine
 }
 
@@ -21,11 +23,9 @@ func NewApp() *App {
 		log.Fatal("Cannot load config:", err)
 	}
 
-	/*
-		redisConfig := redis.NewConfig(viper.GetViper())
-		redis.InitRedisConfig(redisConfig)
-		defer redis.Close()
-	*/
+	v := config.SetUpViper()
+	redisConfig := config.NewRedisConfig(v)
+	redisClient := config.InitRedisClient(redisConfig)
 
 	db, err := database.NewDatabase(cfg)
 	if err != nil {
@@ -37,6 +37,7 @@ func NewApp() *App {
 	return &App{
 		config: cfg,
 		db:     db,
+		redis:  redisClient,
 		router: router,
 	}
 }

@@ -28,7 +28,7 @@ func SetUpViper() *viper.Viper {
 	return v
 }
 
-func NewConfig(v *viper.Viper) *RedisConfig {
+func NewRedisConfig(v *viper.Viper) *RedisConfig {
 	return &RedisConfig{
 		Host:     v.GetString("REDIS_HOST"),
 		Port:     v.GetInt("REDIS_PORT"),

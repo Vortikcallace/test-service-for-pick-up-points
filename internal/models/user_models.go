@@ -21,6 +21,11 @@ type User struct {
 	AllPoints  []Point
 }
 
+type UpdatePasswordRequest struct {
+	OldPassword string `json:"old_pw" validate:"required"`
+	NewPaaword  string `json:"new_pw" validate:"required,min=6"`
+}
+
 type UserResponse struct {
 	ID         uint      `json:"id"`
 	Name       string    `json:"name"`

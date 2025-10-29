@@ -35,3 +35,7 @@ func (r *UserRepository) GetWithOrders(id uint) (*models.User, error) {
 	err := r.db.Preload("Orders.Product").First(&user, id).Error
 	return &user, err
 }
+
+func (r *UserRepository) Update(user *models.User) error {
+	return r.db.Save(user).Error
+}
