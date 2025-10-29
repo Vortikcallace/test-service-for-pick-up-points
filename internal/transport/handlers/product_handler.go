@@ -59,3 +59,35 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 
 	c.JSON(http.StatusOK, product)
 }
+
+func (h *ProductHandler) UpdateProduct(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product ID"})
+		return
+	}
+
+	existingProduct, err := h.productService.GetProduct(uint(id))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		return
+	}
+
+	var updateReq models.CreateProductRequest
+	if err := c.ShouldBindJSON(&updateReq); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	existingProduct.Author = updateReq.Author
+	existingProduct.Name = updateReq.Name
+	existingProduct.ShortDescription = updateReq.ShortDescription
+
+	if err := h.productService.UpdateProduct(existingProduct); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, existingProduct)
+}

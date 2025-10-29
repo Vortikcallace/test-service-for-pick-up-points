@@ -29,3 +29,7 @@ func (r *ProductRepository) GetAll() ([]models.Product, error) {
 	err := r.db.Find(&products).Error
 	return products, err
 }
+
+func (r *ProductRepository) Update(product *models.Product) error {
+	return r.db.Save(product).Error
+}

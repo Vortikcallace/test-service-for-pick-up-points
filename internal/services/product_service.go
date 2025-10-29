@@ -34,3 +34,7 @@ func (s *ProductService) GetAllProducts() ([]models.Product, error) {
 func (s *ProductService) GetProduct(id uint) (*models.Product, error) {
 	return s.productRepo.GetByID(id)
 }
+
+func (s *ProductService) UpdateProduct(product *models.Product) error {
+	return s.productRepo.Update(product)
+}
