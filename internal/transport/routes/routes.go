@@ -39,6 +39,7 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 			orders.POST("/", orderHandler.CreateOrder)
 			orders.GET("/user/:user_id", orderHandler.GetUserOrders)
 			orders.PATCH("/:id/readiness", orderHandler.UpdateOrderReadiness)
+			orders.PATCH("/:id/access", orderHandler.UpdateOrderAccess)
 		}
 
 		products := api.Group("/products")
@@ -46,6 +47,7 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 			products.POST("/", productHandler.CreateProduct)
 			products.GET("/", productHandler.GetProducts)
 			products.GET("/:id", productHandler.GetProduct)
+			products.PUT("/products/:id", productHandler.UpdateProduct)
 		}
 
 		points := api.Group("/points")

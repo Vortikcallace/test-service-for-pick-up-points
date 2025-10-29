@@ -80,7 +80,6 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		return
 	}
 
-	existingProduct.Author = updateReq.Author
 	existingProduct.Name = updateReq.Name
 	existingProduct.ShortDescription = updateReq.ShortDescription
 
