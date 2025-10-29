@@ -8,7 +8,7 @@ import (
 
 type Product struct {
 	ID               uint           `gorm:"primaryKey" json:"id"`
-	Author           string         `gorm:"size:255" json:"author"`
+	Author           Author         `json:"author"`
 	Name             string         `gorm:"size:20" json:"name"`
 	ShortDescription string         `gorm:"size:20" json:"shortdescr"`
 	CreatedAt        time.Time      `json:"created_at"`
@@ -17,7 +17,7 @@ type Product struct {
 }
 
 type CreateProductRequest struct {
-	Author           string `json:"author" binding:"required,max=255"`
+	Author           Author `json:"author" binding:"required"`
 	Name             string `json:"name" binding:"required,max=20"`
 	ShortDescription string `json:"shortdescr" binding:"required,max=20"`
 }
