@@ -34,6 +34,8 @@ type UserResponse struct {
 	UniqueCode uint      `json:"ucode"`
 	Orders     []Order   `json:"orders"`
 	CreatedAt  time.Time `json:"created_at"`
+	Point      Point     `json:"point"`
+	AllPoints  []Point   `json:"allpoints"`
 }
 
 type CreateUserRequest struct {

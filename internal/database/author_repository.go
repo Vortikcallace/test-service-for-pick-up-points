@@ -18,6 +18,12 @@ func (r *AuthorRepository) Create(author *models.Author) error {
 	return r.db.Create(author).Error
 }
 
+func (r *AuthorRepository) GetByEmail(email string) (*models.Author, error) {
+	var author models.Author
+	err := r.db.Where("email = ?", email).First(&author).Error
+	return &author, err
+}
+
 /*
 I will add some functions comig soon
 */
