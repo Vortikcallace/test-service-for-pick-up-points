@@ -17,8 +17,8 @@ type User struct {
 	CreatedAt  time.Time      `json:"created_at"`
 	UpdatedAt  time.Time      `json:"updated_at"`
 	DeletedAt  gorm.DeletedAt `gorm:"index" json:"-"`
-	Point      Point
-	AllPoints  []Point
+	Point      Point          `gorm:"foreignKey:UserID" json:"point"`
+	AllPoints  []Point        `gorm:"foreignKey:UserID" json:"allpoits"`
 }
 
 type UpdatePasswordRequest struct {

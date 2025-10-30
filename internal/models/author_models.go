@@ -15,12 +15,12 @@ type Author struct {
 	CreatedAt  time.Time      `json:"created_at"`
 	UpdatedAt  time.Time      `json:"updated_at"`
 	DeletedAt  gorm.DeletedAt `gorm:"index" json:"-"`
-	Products   []Product      `gotm:"" json:""`
+	Products   []Product      `gorm:"" json:"products"`
 }
 
 type UpdateAuthorPasswordRequest struct {
 	OldPassword string `json:"old_pw" validate:"required"`
-	NewPaaword  string `json:"new_pw" validate:"required,min=6"`
+	NewPaaword  string `json:"new_pw" validate:"required,min=8"`
 }
 
 type AuthorResponse struct {
@@ -29,6 +29,7 @@ type AuthorResponse struct {
 	Email      string    `json:"email"`
 	UniqueCode uint      `json:"ucode"`
 	CreatedAt  time.Time `json:"created_at"`
+	Products   []Product `json:"products"`
 }
 
 type CreateAuthorRequest struct {

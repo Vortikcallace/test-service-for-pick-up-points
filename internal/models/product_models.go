@@ -8,7 +8,8 @@ import (
 
 type Product struct {
 	ID               uint           `gorm:"primaryKey" json:"id"`
-	Author           Author         `json:"author"`
+	Author           Author         `gorm:"" json:"author"`
+	AuthorID         uint           `gorm:"" json:""`
 	Name             string         `gorm:"size:20" json:"name"`
 	ShortDescription string         `gorm:"size:20" json:"shortdescr"`
 	CreatedAt        time.Time      `json:"created_at"`
