@@ -10,12 +10,17 @@ type Manager struct {
 	ID        uint           `gorm:"primaryKey" json:"id"`
 	Name      string         `gorm:"size:20" json:"name"`
 	Password  string         `gorm:"size:255" json:"-"`
-	Point     Point          `gorm:"" json:""`
-	PointID   uint           `gorm:"" json:""`
+	Point     Point          `gorm:"foreignKey:PointID" json:"point"`
+	PointID   uint           `gorm:"not null" json:"point_id"`
 	Orders    []Order        `gorm:"foreignKey:UserID" json:"orders"`
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+}
+
+type UpdateManagerPasswordRequest struct {
+	OldPassword string `json:"old_pw" validate:"required"`
+	NewPaaword  string `json:"new_pw" validate:"required,min=6"`
 }
 
 type ManagerResponse struct {
