@@ -15,7 +15,7 @@ type Author struct {
 	CreatedAt  time.Time      `json:"created_at"`
 	UpdatedAt  time.Time      `json:"updated_at"`
 	DeletedAt  gorm.DeletedAt `gorm:"index" json:"-"`
-	Products   []Product      `gorm:"" json:"products"`
+	Products   []Product      `gorm:"foreignKey:AuthorID" json:"products"`
 }
 
 type UpdateAuthorPasswordRequest struct {

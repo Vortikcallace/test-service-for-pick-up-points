@@ -24,10 +24,22 @@ func (r *AuthorRepository) GetByEmail(email string) (*models.Author, error) {
 	return &author, err
 }
 
-/*
-I will add some functions comig soon
-*/
+func (r *AuthorRepository) GetByID(id uint) (*models.Author, error) {
+	var author models.Author
+	err := r.db.Preload("Products").First(&author, id).Error
+	return &author, err
+}
+
+func (r *AuthorRepository) GetAll() ([]models.Author, error) {
+	var authors []models.Author
+	err := r.db.Find(authors).Error
+	return authors, err
+}
 
 func (r *AuthorRepository) Update(author *models.Author) error {
 	return r.db.Save(author).Error
+}
+
+func (r *AuthorRepository) Delete(author *models.Author) error {
+	return r.db.Delete(author).Error
 }

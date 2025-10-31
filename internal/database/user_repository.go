@@ -36,6 +36,16 @@ func (r *UserRepository) GetWithOrders(id uint) (*models.User, error) {
 	return &user, err
 }
 
+func (r *UserRepository) GetAll() ([]models.User, error) {
+	var users []models.User
+	err := r.db.Find(&users).Error
+	return users, err
+}
+
 func (r *UserRepository) Update(user *models.User) error {
 	return r.db.Save(user).Error
+}
+
+func (r *UserRepository) Delete(user *models.User) error {
+	return r.db.Delete(user).Error
 }

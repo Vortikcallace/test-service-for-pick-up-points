@@ -33,3 +33,7 @@ func (r *ProductRepository) GetAll() ([]models.Product, error) {
 func (r *ProductRepository) Update(product *models.Product) error {
 	return r.db.Save(product).Error
 }
+
+func (r *ProductRepository) Delete(product *models.Product) error {
+	return r.db.Delete(product).Error
+}

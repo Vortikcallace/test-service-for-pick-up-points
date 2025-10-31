@@ -29,3 +29,7 @@ func (r *PointRepository) GetAll() ([]models.Point, error) {
 	err := r.db.Find(&points).Error
 	return points, err
 }
+
+func (r *PointRepository) Delete(point *models.Point) error {
+	return r.db.Delete(point).Error
+}
