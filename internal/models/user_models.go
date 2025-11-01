@@ -14,6 +14,7 @@ type User struct {
 	Age        int            `gorm:"default:18" json:"age"`
 	UniqueCode uint           `gorm:"primaryKey" json:"ucode"`
 	Orders     []Order        `gorm:"foreignKey:UserID" json:"orders"`
+	Order      Order          `gorm:"foreignKey:UserID" json:"order"`
 	CreatedAt  time.Time      `json:"created_at"`
 	UpdatedAt  time.Time      `json:"updated_at"`
 	DeletedAt  gorm.DeletedAt `gorm:"index" json:"-"`
@@ -33,14 +34,19 @@ type UserResponse struct {
 	Age        int       `json:"age"`
 	UniqueCode uint      `json:"ucode"`
 	Orders     []Order   `json:"orders"`
+	Order      Order     `json:"order"`
 	CreatedAt  time.Time `json:"created_at"`
 	Point      Point     `json:"point"`
 	AllPoints  []Point   `json:"allpoints"`
 }
 
 type CreateUserRequest struct {
-	Name     string `json:"name" binding:"required,min=2,max=20"`
-	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password" binding:"required,min=6"`
-	Age      int    `json:"age" binding:"min=0,max=120"`
+	Name      string  `json:"name" binding:"required,min=2,max=20"`
+	Email     string  `json:"email" binding:"required,email"`
+	Password  string  `json:"password" binding:"required,min=6"`
+	Age       int     `json:"age" binding:"min=0,max=120"`
+	Orders    []Order `json:"orders" binding:"required"`
+	Order     Order   `json:"order" binding:"required"`
+	Point     Point   `json:"point" binding:"required"`
+	AllPoints []Point `json:"allpoints" binding:"required"`
 }

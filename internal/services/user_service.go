@@ -35,6 +35,10 @@ func (s *UserService) CreateUser(req models.CreateUserRequest) (*models.UserResp
 		Password:   hashedPassword,
 		Age:        req.Age,
 		UniqueCode: uniqueCode,
+		Orders:     req.Orders,
+		Order:      req.Order,
+		Point:      req.Point,
+		AllPoints:  req.AllPoints,
 	}
 
 	if err := s.userRepo.Create(user); err != nil {
@@ -48,6 +52,10 @@ func (s *UserService) CreateUser(req models.CreateUserRequest) (*models.UserResp
 		Age:        user.Age,
 		UniqueCode: user.UniqueCode,
 		CreatedAt:  user.CreatedAt,
+		Orders:     user.Orders,
+		Order:      user.Order,
+		Point:      user.Point,
+		AllPoints:  user.AllPoints,
 	}, nil
 }
 
@@ -66,23 +74,3 @@ func (s *UserService) GetUser(id uint) (*models.User, error) {
 func (s *UserService) UpdateUser(user *models.User) error {
 	return s.userRepo.Update(user)
 }
-
-//
-//
-//
-//
-//Unusable function
-/*
-func (s *UserService) Authenticate(email, password string) (*models.User, error) {
-	user, err := s.userRepo.GetByEmail(email)
-	if err != nil {
-		return nil, errors.New("invalid password")
-	}
-
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-		return nil, errors.New("invalid password")
-	}
-
-	return user, nil
-}
-*/

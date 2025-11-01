@@ -49,3 +49,6 @@ func (h *UserHandler) GetUser(c *gin.Context) {
 
 	c.JSON(http.StatusOK, user)
 }
+
+func (h *UserHandler) UpdateUser(c *gin.Context) {
+}
