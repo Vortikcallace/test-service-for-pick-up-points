@@ -40,6 +40,7 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 			orders.GET("/user/:user_id", orderHandler.GetUserOrders)
 			orders.PATCH("/:id/readiness", orderHandler.UpdateOrderReadiness)
 			orders.PATCH("/:id/access", orderHandler.UpdateOrderAccess)
+			orders.PATCH("/:id/active", orderHandler.UpdateOrderActive)
 		}
 
 		products := api.Group("/products")

@@ -99,3 +99,28 @@ func (h *OrderHandler) UpdateOrderAccess(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "order access updated"})
 }
+
+func (h *OrderHandler) UpdateOrderActive(c *gin.Context) {
+	orderIDStr := c.Param("id")
+	orderID, err := strconv.ParseUint(orderIDStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid order ID"})
+		return
+	}
+
+	var req struct {
+		Access bool `json:"active" binding:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := h.orderService.UpdateOrderAccess(uint(orderID), req.Access); err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "order active updated"})
+}

@@ -38,6 +38,10 @@ func (r *OrderRepository) UpdateAccess(id uint, access bool) error {
 	return r.db.Model(&models.Order{}).Where("id = ?", id).Update("access", access).Error
 }
 
+func (r *OrderRepository) UpdateActive(id uint, active bool) error {
+	return r.db.Model(&models.Order{}).Where("id = ?").Update("active", active).Error
+}
+
 func (r *OrderRepository) GetAll() ([]models.Order, error) {
 	var orders []models.Order
 	err := r.db.Find(&orders).Error

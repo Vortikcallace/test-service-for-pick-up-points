@@ -13,6 +13,7 @@ type Order struct {
 	Product   Product        `gorm:"foreignKey:ProductID" json:"product"`
 	Readiness bool           `gorm:"default:false" json:"readiness"`
 	Access    bool           `gorm:"default:false" json:"access"`
+	Active    bool           `gorm:"default:true" json:"active"`
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
