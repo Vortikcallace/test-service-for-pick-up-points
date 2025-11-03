@@ -30,6 +30,12 @@ func (r *ManagerRepository) GetByID(id uint) (*models.Manager, error) {
 	return &manager, err
 }
 
+func (r *ManagerRepository) GetManagerOrders(id uint) (*models.Manager, error) {
+	var manager models.Manager
+	err := r.db.Preload("Orders.Product").First(&manager, id).Error
+	return &manager, err
+}
+
 func (r *ManagerRepository) GetAll() ([]models.Manager, error) {
 	var managers []models.Manager
 	err := r.db.Find(&managers).Error

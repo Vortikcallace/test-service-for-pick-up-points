@@ -32,6 +32,7 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 		{
 			users.POST("/", userHandler.CreateUser)
 			users.GET("/:id", userHandler.GetUser)
+			users.DELETE("/:id", userHandler.DeleteUser)
 		}
 
 		orders := api.Group("/orders")
