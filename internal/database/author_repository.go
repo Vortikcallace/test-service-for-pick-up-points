@@ -30,6 +30,18 @@ func (r *AuthorRepository) GetByID(id uint) (*models.Author, error) {
 	return &author, err
 }
 
+func (r *AuthorRepository) GetAuthorProducts(id uint) (*models.Author, error) {
+	var author models.Author
+	err := r.db.Preload("Products").First(&author, id).Error
+	return &author, err
+}
+
+func (r *AuthorRepository) GetAuthorProduct(id uint) (*models.Author, error) {
+	var author models.Author
+	err := r.db.Preload("Product").First(&author, id).Error
+	return &author, err
+}
+
 func (r *AuthorRepository) GetAll() ([]models.Author, error) {
 	var authors []models.Author
 	err := r.db.Find(authors).Error

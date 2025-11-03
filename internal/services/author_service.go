@@ -48,3 +48,31 @@ func (s *AuthorService) CreateAuthor(req models.CreateAuthorRequest) (*models.Au
 		CreatedAt:  author.CreatedAt,
 	}, nil
 }
+
+func (s *AuthorService) GetAuthorProducts(id uint) (*models.Author, error) {
+	author, err := s.authorRepo.GetAuthorProducts(id)
+	if err != nil {
+		return nil, errors.New("author not found")
+	}
+	return author, nil
+}
+
+func (s *AuthorService) GetAuthorProduct(id uint) (*models.Author, error) {
+	author, err := s.authorRepo.GetAuthorProduct(id)
+	if err != nil {
+		return nil, errors.New("author not found")
+	}
+	return author, nil
+}
+
+func (s *AuthorService) GetAuthor(id uint) (*models.Author, error) {
+	return s.authorRepo.GetByID(id)
+}
+
+func (s *AuthorService) UpdateAuthor(author *models.Author) error {
+	return s.authorRepo.Update(author)
+}
+
+func (s *AuthorService) DeleteAuthor(author *models.Author) error {
+	return s.authorRepo.Delete(author)
+}
