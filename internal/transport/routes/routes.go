@@ -51,7 +51,9 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 		managers := api.Group("/managers")
 		{
 			managers.POST("/", managerHandler.CreateManager)
-			managers.GET("/:id", managerHandler.GetManager)
+			//managers.GET("/:id", managerHandler.GetManager)
+			managers.GET("/:id", managerHandler.GetManagerOrders)
+			managers.GET("/:id", managerHandler.GetManagerPoint)
 			managers.DELETE("/:id", managerHandler.DeleteManager)
 		}
 

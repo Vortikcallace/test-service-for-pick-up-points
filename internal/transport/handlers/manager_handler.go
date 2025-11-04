@@ -33,6 +33,7 @@ func (h *ManagerHandler) CreateManager(c *gin.Context) {
 	c.JSON(http.StatusCreated, manager)
 }
 
+/*
 func (h *ManagerHandler) GetManager(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.ParseUint(idStr, 10, 32)
@@ -42,6 +43,41 @@ func (h *ManagerHandler) GetManager(c *gin.Context) {
 	}
 
 	manager, err := h.managerService.GetManagerOrders(uint(id))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, manager)
+}
+*/
+
+func (h *ManagerHandler) GetManagerOrders(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid manager ID"})
+		return
+	}
+
+	manager, err := h.managerService.GetManagerOrders(uint(id))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, manager)
+}
+
+func (h *ManagerHandler) GetManagerPoint(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid manager ID"})
+		return
+	}
+
+	manager, err := h.managerService.GetManagerPoint(uint(id))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return

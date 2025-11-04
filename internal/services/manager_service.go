@@ -56,6 +56,14 @@ func (s *ManagerService) GetManagerOrders(id uint) (*models.Manager, error) {
 	return manager, nil
 }
 
+func (s *ManagerService) GetManagerPoint(id uint) (*models.Manager, error) {
+	manager, err := s.managerRepo.GetManagerPoint(id)
+	if err != nil {
+		return nil, errors.New("manager not found")
+	}
+	return manager, nil
+}
+
 func (s *ManagerService) GetManager(id uint) (*models.Manager, error) {
 	return s.managerRepo.GetByID(id)
 }
