@@ -12,16 +12,22 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 	router := gin.Default()
 
 	userRepo := database.NewUserRepository(db.DB)
+	authorRepo := database.NewAuthorRepository(db.DB)
+	managerRepo := database.NewManagerRepository(db.DB)
 	orderRepo := database.NewOrderRepository(db.DB)
 	productRepo := database.NewProductRepository(db.DB)
 	pointRepo := database.NewPointRepository(db.DB)
 
 	userService := services.NewUserService(userRepo)
+	authorService := services.NewAuthorService(authorRepo)
+	managerService := services.NewManagerService(managerRepo)
 	orderService := services.NewOrderService(orderRepo, userRepo, productRepo, pointRepo)
 	productService := services.NewProductService(productRepo)
 	pointService := services.NewPointService(pointRepo)
 
 	userHandler := handlers.NewUserHandler(userService)
+	authorHandler := handlers.NewAuthorHandler(authorService)
+	managerHandler := handlers.NewManagerHandler(managerService)
 	orderHandler := handlers.NewOrderHandler(orderService)
 	productHandler := handlers.NewProductHandler(productService)
 	pointHandler := handlers.NewPointHandler(pointService)
@@ -33,6 +39,20 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 			users.POST("/", userHandler.CreateUser)
 			users.GET("/:id", userHandler.GetUser)
 			users.DELETE("/:id", userHandler.DeleteUser)
+		}
+
+		authors := api.Group("/authors")
+		{
+			authors.POST("/", authorHandler.CreateAuthor)
+			authors.GET("/:id", authorHandler.GetAuthor)
+			authors.DELETE("/:id", authorHandler.DeleteAuthor)
+		}
+
+		managers := api.Group("/managers")
+		{
+			managers.POST("/", managerHandler.CreateManager)
+			managers.GET("/:id", managerHandler.GetManager)
+			managers.DELETE("/:id", managerHandler.DeleteManager)
 		}
 
 		orders := api.Group("/orders")
