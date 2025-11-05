@@ -97,7 +97,7 @@ func (h *ManagerHandler) UpdateManager(c *gin.Context) {
 	managerIDStr := c.Param("id")
 	managerID, err := strconv.ParseUint(managerIDStr, 10, 32)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user ID"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid manager ID"})
 		return
 	}
 
@@ -119,7 +119,7 @@ func (h *ManagerHandler) DeleteManager(c *gin.Context) {
 	managerIDStr := c.Param("id")
 	managerID, err := strconv.ParseUint(managerIDStr, 10, 32)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user ID"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid manager ID"})
 		return
 	}
 
