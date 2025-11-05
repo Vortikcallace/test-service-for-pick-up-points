@@ -74,3 +74,7 @@ func (s *UserService) GetUser(id uint) (*models.User, error) {
 func (s *UserService) UpdateUser(user *models.User) error {
 	return s.userRepo.Update(user)
 }
+
+func (s *UserService) DeleteUser(user *models.User) error {
+	return s.userRepo.Delete(user)
+}

@@ -34,3 +34,11 @@ func (s *PointService) GetAllPoints() ([]models.Point, error) {
 func (s *PointService) GetPoint(id uint) (*models.Point, error) {
 	return s.pointRepo.GetByID(id)
 }
+
+func (s *PointService) UpdatePoint(point *models.Point) error {
+	return s.pointRepo.Update(point)
+}
+
+func (s *PointService) DeletePoint(point *models.Point) error {
+	return s.pointRepo.Delete(point)
+}

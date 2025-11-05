@@ -30,6 +30,10 @@ func (r *PointRepository) GetAll() ([]models.Point, error) {
 	return points, err
 }
 
+func (r *PointRepository) Update(point *models.Point) error {
+	return r.db.Save(point).Error
+}
+
 func (r *PointRepository) Delete(point *models.Point) error {
 	return r.db.Delete(point).Error
 }

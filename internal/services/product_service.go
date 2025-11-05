@@ -38,3 +38,7 @@ func (s *ProductService) GetProduct(id uint) (*models.Product, error) {
 func (s *ProductService) UpdateProduct(product *models.Product) error {
 	return s.productRepo.Update(product)
 }
+
+func (s *ProductService) DeleteProduct(product *models.Product) error {
+	return s.productRepo.Delete(product)
+}

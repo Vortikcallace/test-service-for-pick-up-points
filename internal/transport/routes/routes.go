@@ -38,6 +38,7 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 		{
 			users.POST("/", userHandler.CreateUser)
 			users.GET("/:id", userHandler.GetUser)
+			users.PUT("/:id", userHandler.UpdateUser)
 			users.DELETE("/:id", userHandler.DeleteUser)
 		}
 
@@ -45,15 +46,17 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 		{
 			authors.POST("/", authorHandler.CreateAuthor)
 			authors.GET("/:id", authorHandler.GetAuthor)
+			authors.PUT("/:id", authorHandler.UpdateAuthor)
 			authors.DELETE("/:id", authorHandler.DeleteAuthor)
 		}
 
 		managers := api.Group("/managers")
 		{
 			managers.POST("/", managerHandler.CreateManager)
-			//managers.GET("/:id", managerHandler.GetManager)
+			managers.GET("/:id", managerHandler.GetManager)
 			managers.GET("/:id", managerHandler.GetManagerOrders)
 			managers.GET("/:id", managerHandler.GetManagerPoint)
+			managers.PUT("/:id", managerHandler.UpdateManager)
 			managers.DELETE("/:id", managerHandler.DeleteManager)
 		}
 
@@ -79,6 +82,8 @@ func SetupRoutes(db *database.Database) *gin.Engine {
 			points.POST("/", pointHandler.CreatePoint)
 			points.GET("/", pointHandler.GetPoints)
 			points.GET("/:id", pointHandler.GetPoint)
+			points.PUT("/:id", pointHandler.UpdatePoint)
+			points.DELETE("/:id", pointHandler.DeletePoint)
 		}
 	}
 

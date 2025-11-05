@@ -51,14 +51,10 @@ func (h *AuthorHandler) GetAuthor(c *gin.Context) {
 }
 
 func (h *AuthorHandler) UpdateAuthor(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"message": "author updated successfully"})
-}
-
-func (h *AuthorHandler) DeleteAuthor(c *gin.Context) {
 	authorIDStr := c.Param("id")
 	authorID, err := strconv.ParseUint(authorIDStr, 10, 32)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user ID"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid author ID"})
 		return
 	}
 
@@ -69,6 +65,28 @@ func (h *AuthorHandler) DeleteAuthor(c *gin.Context) {
 	}
 
 	if err := h.authorService.UpdateAuthor(author); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "author updated successfully"})
+}
+
+func (h *AuthorHandler) DeleteAuthor(c *gin.Context) {
+	authorIDStr := c.Param("id")
+	authorID, err := strconv.ParseUint(authorIDStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid author ID"})
+		return
+	}
+
+	author, err := h.authorService.GetAuthor(uint(authorID))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := h.authorService.DeleteAuthor(author); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

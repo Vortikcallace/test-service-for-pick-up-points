@@ -59,3 +59,47 @@ func (h *PointHandler) GetPoint(c *gin.Context) {
 
 	c.JSON(http.StatusOK, point)
 }
+
+func (h *PointHandler) UpdatePoint(c *gin.Context) {
+	userIDStr := c.Param("id")
+	userID, err := strconv.ParseUint(userIDStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid point ID"})
+		return
+	}
+
+	user, err := h.pointService.GetPoint(uint(userID))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := h.pointService.UpdatePoint(user); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "point updated successfully"})
+}
+
+func (h *PointHandler) DeletePoint(c *gin.Context) {
+	userIDStr := c.Param("id")
+	userID, err := strconv.ParseUint(userIDStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid point ID"})
+		return
+	}
+
+	user, err := h.pointService.GetPoint(uint(userID))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := h.pointService.DeletePoint(user); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "point deleted successfully"})
+}

@@ -90,3 +90,25 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 
 	c.JSON(http.StatusOK, existingProduct)
 }
+
+func (h *ProductHandler) DeleteProduct(c *gin.Context) {
+	productIDStr := c.Param("id")
+	productID, err := strconv.ParseUint(productIDStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid product ID"})
+		return
+	}
+
+	user, err := h.productService.GetProduct(uint(productID))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := h.productService.DeleteProduct(user); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "product deleted successfully"})
+}
